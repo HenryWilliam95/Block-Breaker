@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ball : MonoBehaviour {
-    public paddle Paddle;
+
+    paddle Paddle;
 
     private Vector3 paddleToBallVector;
 
@@ -13,9 +14,11 @@ public class ball : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        Paddle = GameObject.FindObjectOfType<paddle>();
         paddleToBallVector = this.transform.position - Paddle.transform.position;
 
         rb = GetComponent<Rigidbody2D>();
+
 	}
 	
 	// Update is called once per frame

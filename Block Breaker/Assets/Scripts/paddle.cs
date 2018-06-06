@@ -11,15 +11,29 @@ public class paddle : MonoBehaviour {
 
     Rigidbody2D rb;
 
+    public bool autoPlay = false;
+
+    private ball Ball;
+
     // Use this for initialization
     void Start ()
     {
         paddlePos = new Vector3(this.transform.position.x, this.transform.position.y);
         rb = GetComponent<Rigidbody2D>();
+
+        Ball = FindObjectOfType<ball>();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        if (!autoPlay)
+            MoveWithMouse();
+        else
+            AutoPlay();
+    }
+
+    void MoveWithMouse()
     {
         target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -29,17 +43,7 @@ public class paddle : MonoBehaviour {
 
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
-
-
-
-        //float h = Input.GetAxis("Horizontal");
-
-        //Vector3 movement = new Vector3(this.transform.position.x + h * speed * Time.deltaTime, this.transform.position.y);
-
-        ////this.rb.AddForce(movement);
-        //this.transform.position = movement;
-
-        if(this.transform.position.x > 7.3)
+        if (this.transform.position.x > 7.3)
         {
             this.transform.position = new Vector3(7.3f, this.transform.position.y);
         }
@@ -47,5 +51,13 @@ public class paddle : MonoBehaviour {
         {
             this.transform.position = new Vector3(-7.3f, this.transform.position.y);
         }
+    }
+
+    void AutoPlay()
+    {
+        Vector3 paddlePos = new Vector3(0.5f, this.transform.position.y, 0f);
+        Vector3 ballPos = Ball.transform.position;
+        paddlePos.x = ballPos.x;
+        this.transform.position = paddlePos;
     }
 }

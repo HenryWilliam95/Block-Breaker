@@ -29,4 +29,13 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Lose Scene");
     }
+
+    public void BrickDestroyed()
+    {
+        if (Brick.breakableBricks <= 0)
+        {
+            LoadNextLevel();
+        }
+
+    }
 }
